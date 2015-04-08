@@ -1,0 +1,27 @@
+b) https://www.dropbox.com/s/gn5rpxkenl064c3/Screenshot%202015-04-07%2022.05.06.png?dl=0
+   The above link has an image that shows the Cobertura coverage for different classes in jgrapht
+
+c) Testing BellmanFordShortestPath
+   Bellman-Ford Shortest Path algorithm takes in two parameters, the graph itself and the startVertex. 
+   The input domain would be all possible values that the graph could take or all possible values that the startVertex could take. 
+   The graph could either be null, empty, have at least one node or have more than one node. 
+   The vertex could either be null or have some valid value. 
+
+d) graph:
+   B1 = null
+   B2 = empty
+   B3 = has one node
+   B4 = has more than one node (either connected or not connected by edges)
+
+   start vertex:
+   C1 = null
+   C2 = some valid value
+
+   relation (Bellman-Ford):
+   R1 = graph is null and vertex is null
+   R2 = graph is empty and vertex is null
+   R3 = graph has one node and there are no outgoing edges
+   R4 = graph has more than one node and start vertex has no outgoing edges
+   R5 = graph has more than one node and at least one outgoing edge
+
+e)
