@@ -1,3 +1,5 @@
+a) Jgrapht ran a total of 244 tests
+
 b) https://www.dropbox.com/s/gn5rpxkenl064c3/Screenshot%202015-04-07%2022.05.06.png?dl=0
    The above link has an image that shows the Cobertura coverage for different classes in jgrapht
 
@@ -24,4 +26,37 @@ d) graph:
    R4 = graph has more than one node and start vertex has no outgoing edges
    R5 = graph has more than one node and at least one outgoing edge
 
-e)
+e) All Combinations would be the best choice of coverage for Bellman-Ford. Since there are only two parameters, the advantages of Pairwise are lost here. The partitions we defined aren’t an outrageous number, so we can leverage the superior coverage of All Combinations and test Bellman-Ford to the fullest extent of our partition.
+
+	Test Cases
+
+	(null, null)
+	(empty graph, null)
+	(one node, null)
+	(two nodes, null)
+	(null, vertex value)
+	(empty graph, vertex value)
+	(one node, vertex value)
+	(wo nodes, vertex value)
+
+The total value of test cases for “All Combinations” is 4 * 2 = 8.
+
+Base Choice (our base choice would be (null, null)):
+
+	(null, null)
+	(empty graph, null)
+	(one node, null)
+	(two nodes, null)
+	(null, vertex value)
+
+Boundary Values:
+
+Graph Input
+G1: null
+G2: empty graph
+G3: graph with one node
+G4: graph with 2 nodes, graph with infinite nodes
+
+Vertex Input:
+G1: null
+G2: vertex value
