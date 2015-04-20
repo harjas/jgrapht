@@ -167,6 +167,104 @@ public class SubgraphTest
         return g;
     }
 
+    public void testInDegree() {
+        SimpleDirectedGraph<String, DefaultEdge> g = new SimpleDirectedGraph<String, DefaultEdge>(
+            DefaultEdge.class);
+
+        String v1 = "v1";
+        String v2 = "v2";
+        String v3 = "v3";
+        String v4 = "v4";
+        String v5 = "v5";
+
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+        g.addVertex(v5);
+
+        g.addEdge(v2, v1);
+        g.addEdge(v3, v1);
+        g.addEdge(v4, v1);
+
+        g.addEdge(v3, v2);
+        g.addEdge(v4, v2);
+
+        g.addEdge(v4, v3);
+
+        g.addEdge(v4, v5);
+
+        Set<String> v = new HashSet<String>();
+        v.add(v1);
+        v.add(v2);
+        v.add(v3);
+        v.add(v4);
+
+        Set<DefaultEdge> e = new HashSet<DefaultEdge>();
+        e.add(g.getEdge(v2, v1));
+        e.add(g.getEdge(v3, v1));
+        e.add(g.getEdge(v4, v1));
+        e.add(g.getEdge(v3, v2));
+        e.add(g.getEdge(v4, v2));
+        e.add(g.getEdge(v4, v3));
+
+        DirectedSubgraph<String, DefaultEdge> sg = new DirectedSubgraph<String, DefaultEdge>(g, v, e);
+
+        assertEquals(3, sg.inDegreeOf(v1));
+        assertEquals(2, sg.inDegreeOf(v2));
+        assertEquals(1, sg.inDegreeOf(v3));
+        assertEquals(0, sg.inDegreeOf(v4));
+    }
+
+    public void testOutDegree() {
+        SimpleDirectedGraph<String, DefaultEdge> g = new SimpleDirectedGraph<String, DefaultEdge>(
+            DefaultEdge.class);
+
+        String v1 = "v1";
+        String v2 = "v2";
+        String v3 = "v3";
+        String v4 = "v4";
+        String v5 = "v5";
+
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+        g.addVertex(v5);
+
+        g.addEdge(v2, v1);
+        g.addEdge(v3, v1);
+        g.addEdge(v4, v1);
+
+        g.addEdge(v3, v2);
+        g.addEdge(v4, v2);
+
+        g.addEdge(v4, v3);
+
+        g.addEdge(v4, v5);
+
+        Set<String> v = new HashSet<String>();
+        v.add(v1);
+        v.add(v2);
+        v.add(v3);
+        v.add(v4);
+
+        Set<DefaultEdge> e = new HashSet<DefaultEdge>();
+        e.add(g.getEdge(v2, v1));
+        e.add(g.getEdge(v3, v1));
+        e.add(g.getEdge(v4, v1));
+        e.add(g.getEdge(v3, v2));
+        e.add(g.getEdge(v4, v2));
+        e.add(g.getEdge(v4, v3));
+
+        DirectedSubgraph<String, DefaultEdge> sg = new DirectedSubgraph<String, DefaultEdge>(g, v, e);
+
+        assertEquals(0, sg.outDegreeOf(v1));
+        assertEquals(1, sg.outDegreeOf(v2));
+        assertEquals(2, sg.outDegreeOf(v3));
+        assertEquals(3, sg.outDegreeOf(v4));
+    }
+
     public void testInducedSubgraphUnderlyingEdgeAddition()
     {
         ListenableGraph<Object, DefaultEdge> baseGraph =
