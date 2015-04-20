@@ -1,6 +1,11 @@
 # JGraphT
+<<<<<<< HEAD
+Changing Readme first time in testing branch - Harjas
+Released: December, 2013</p>
+=======
 
 Released: May, 2015</p>
+>>>>>>> 1c9d9d9dcbc6fc31f1f136e562d8df1ad84c0f4c
 
 Written by [Barak Naveh](mailto:barak_naveh@users.sourceforge.net)  and Contributors
 
