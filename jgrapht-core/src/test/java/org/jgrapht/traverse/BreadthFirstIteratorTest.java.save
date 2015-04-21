@@ -83,8 +83,8 @@ public class BreadthFirstIteratorTest
     public void testBreadthFirstOnEmptyGraph(){
         DirectedGraph<String, DefaultEdge> dg =
             new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
-       AbstractGraphIterator<String, DefaultEdge> bfs = new BreadthFirstIterator<String, DefaultEdge>(dg);
-        assertFalse(bfs.hasNext());
+        Iterator<String> dfs = new BreadthFirstIterator<String, DefaultEdge>(dg);
+        assertFalse(dfs.hasNext());
     }
 }
 

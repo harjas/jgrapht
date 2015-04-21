@@ -149,6 +149,122 @@ public class DepthFirstIteratorTest
         String expected = "ABCGIFEHJKLD";
         assertEquals(expected, actual);
     }
+
+    public void testEmptyDepthFirst(){
+        DirectedGraph<String, DefaultEdge> dg =
+            new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+        Iterator<String> dfs = new DepthFirstIterator<String, DefaultEdge>(dg);
+        assertFalse(dfs.hasNext());
+    }
+
+    public void testSimpleDepthFirst(){
+        DirectedGraph<String, DefaultEdge> dg =
+            new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+
+        String a = "A";
+        String b = "B";
+        String c = "C";
+        String d = "D";
+
+        dg.addVertex(a);
+        dg.addVertex(b);
+        dg.addVertex(c);
+        dg.addVertex(d);
+
+        dg.addEdge(a,b);
+        dg.addEdge(b,c);
+        dg.addEdge(c,d);
+
+
+        Iterator<String> dfs = new DepthFirstIterator<String, DefaultEdge>(dg);
+        String actual = "";
+        while (dfs.hasNext()) {
+            String v = dfs.next();
+            actual += v;
+        }
+
+        String expected = "ABCD";
+        assertEquals(expected, actual);
+    }
+
+    public void testOrderOfDepthFirst(){
+        DirectedGraph<String, DefaultEdge> dg =
+            new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+
+        String a = "A";
+        String b = "B";
+        String c = "C";
+        String d = "D";
+        String e = "E";
+        String f = "F";
+
+        dg.addVertex(a);
+        dg.addVertex(b);
+        dg.addVertex(c);
+        dg.addVertex(d);
+        dg.addVertex(e);
+        dg.addVertex(f);
+
+        dg.addEdge(a,b);
+        dg.addEdge(b,c);
+        dg.addEdge(c,d);
+        dg.addEdge(c,e);
+        dg.addEdge(e,f);
+
+
+        Iterator<String> dfs = new DepthFirstIterator<String, DefaultEdge>(dg);
+        String actual = "";
+        while (dfs.hasNext()) {
+            String v = dfs.next();
+            actual += v;
+        }
+
+        String expected = "ABCEFD";
+        assertEquals(expected, actual);
+    }
+
+    public void testComplexOrderOfDepthFirst(){
+        DirectedGraph<String, DefaultEdge> dg =
+            new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+
+        String a = "A";
+        String b = "B";
+        String c = "C";
+        String d = "D";
+        String e = "E";
+        String f = "F";
+        String g = "G";
+        String j = "J";
+
+
+        dg.addVertex(a);
+        dg.addVertex(b);
+        dg.addVertex(c);
+        dg.addVertex(d);
+        dg.addVertex(e);
+        dg.addVertex(f);
+        dg.addVertex(g);
+        dg.addVertex(j);
+
+        dg.addEdge(a,b);
+        dg.addEdge(b,c);
+        dg.addEdge(c,j);
+        dg.addEdge(c,d);
+        dg.addEdge(c,e);
+        dg.addEdge(c,f);
+        dg.addEdge(c,g);
+
+
+        Iterator<String> dfs = new DepthFirstIterator<String, DefaultEdge>(dg);
+        String actual = "";
+        while (dfs.hasNext()) {
+            String v = dfs.next();
+            actual += v;
+        }
+
+        String expected = "ABCJGFED";
+        assertEquals(expected, actual);
+    }
 }
 
 // End DepthFirstIteratorTest.java
