@@ -115,6 +115,47 @@ public class GraphReaderTest
         }
     }
 
+public void testGraphReaderTerminalCoverage() {
+String _unweightedG = "p 10\ne 1 2\ne 2 3\ne 3 4\ne 4 5\ne 5 6\ne 6 7\ne 7 8\ne 8 9\ne 9 10";
+    GraphReader<Integer, DefaultEdge> reader;
+    try {
+        reader =
+            new GraphReader<Integer, DefaultEdge>(
+                new StringReader(_unweightedG));
+        Graph<Integer, DefaultEdge> g =
+            new SimpleGraph<Integer, DefaultEdge>(
+                DefaultEdge.class);
+        VertexFactory<Integer> vf = new IntVertexFactory();
+        reader.generateGraph(g, vf, null);
+        Graph<Integer, DefaultEdge> g2 =
+            new SimpleGraph<Integer, DefaultEdge>(
+                DefaultEdge.class);
+        g2.addVertex(0);
+        g2.addVertex(1);
+        g2.addVertex(2);
+        g2.addVertex(3);
+        g2.addVertex(4);
+        g2.addVertex(5);
+        g2.addVertex(6);
+        g2.addVertex(7);
+        g2.addVertex(8);
+        g2.addVertex(9);
+        
+        g2.addEdge(0, 1);
+        g2.addEdge(1, 2);
+        g2.addEdge(2, 3);
+        g2.addEdge(3, 4);
+        g2.addEdge(4, 5);
+        g2.addEdge(5, 6);
+        g2.addEdge(6, 7);
+        g2.addEdge(7, 8);
+        g2.addEdge(8, 9);
+
+        assertEquals(g2.toString(), g.toString());
+    } catch (IOException e) {
+    }
+}
+
     //~ Inner Classes ----------------------------------------------------------
 
     private static final class IntVertexFactory
