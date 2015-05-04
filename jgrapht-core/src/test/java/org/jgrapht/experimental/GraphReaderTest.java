@@ -115,8 +115,182 @@ public class GraphReaderTest
         }
     }
 
+    public void testUnweightedGraphReaderEmptyString()
+    {	
+        GraphReader<Integer, DefaultEdge> reader;
+        String emptyGraph = "";
+        try {
+            reader = new GraphReader<Integer, DefaultEdge>(new StringReader(emptyGraph));
+            Graph<Integer, DefaultEdge> g = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            VertexFactory<Integer> vf = new IntVertexFactory();
+            reader.generateGraph(g, vf, null);
+            
+            Graph<Integer, DefaultEdge> g2 = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            assertEquals(g2.toString(), g.toString());
+        } catch (IOException e) {
+        }
+    }
+
+    public void testUnweightedGraphReaderNodesOnly()
+    {
+        GraphReader<Integer, DefaultEdge> reader;
+        String emptyGraph = "p 3\n";
+        try {
+            reader = new GraphReader<Integer, DefaultEdge>(new StringReader(emptyGraph));
+            Graph<Integer, DefaultEdge> g = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            VertexFactory<Integer> vf = new IntVertexFactory();
+            reader.generateGraph(g, vf, null);
+            
+            Graph<Integer, DefaultEdge> g2 = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            g2.addVertex(0);
+            g2.addVertex(1);
+            g2.addVertex(2);
+            assertEquals(g2.toString(), g.toString());
+        } catch (IOException e) {
+        }
+    }
+
+    //No Expected output. Written to see if case was handled. Result: Is not handled.
+    public void testUnweightedGraphReaderEdgesOnly()
+    {
+        GraphReader<Integer, DefaultEdge> reader;
+        String emptyGraph = "e 1 2\ne 2 3";
+        try {
+            reader = new GraphReader<Integer, DefaultEdge>(new StringReader(emptyGraph));
+            Graph<Integer, DefaultEdge> g = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            VertexFactory<Integer> vf = new IntVertexFactory();
+            reader.generateGraph(g, vf, null);
+            
+            Graph<Integer, DefaultEdge> g2 = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            assertEquals(g2.toString(), g.toString());
+        } catch (IOException e) {
+        }
+    }
+    
+    //No expected output. Was written to see if case was handled. Result: Is not handled. 
+    public void testUnweightedGraphReaderMoreEdgesThanNodes()
+    {
+        GraphReader<Integer, DefaultEdge> reader;
+        String emptyGraph = "p 2\ne 1 2\ne 2 3";
+        try {
+            reader = new GraphReader<Integer, DefaultEdge>(new StringReader(emptyGraph));
+            Graph<Integer, DefaultEdge> g = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            VertexFactory<Integer> vf = new IntVertexFactory();
+            reader.generateGraph(g, vf, null);
+            
+            Graph<Integer, DefaultEdge> g2 = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            assertEquals(g2.toString(), g.toString());
+        } catch (IOException e) {
+        }
+    }
+
+    //No right expected output. Ran it to see if case was handled. Result: Is not handled. 	
+    public void testUnweightedGraphReaderWithDifferentEdgeNumbers()
+    {
+        System.out.println("Testing Different edge numbers");
+	GraphReader<Integer, DefaultEdge> reader;
+        String emptyGraph = "p 3\ne 3 4\ne 4 5";
+        try {
+            reader = new GraphReader<Integer, DefaultEdge>(new StringReader(emptyGraph));
+            Graph<Integer, DefaultEdge> g = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            VertexFactory<Integer> vf = new IntVertexFactory();
+            reader.generateGraph(g, vf, null);
+            
+            Graph<Integer, DefaultEdge> g2 = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+	    g2.addVertex(0);
+	    g2.addVertex(1);
+	    g2.addVertex(2);
+	    g2.addEdge(3,4);
+            g2.addEdge(4,5);	
+            assertEquals(g2.toString(), g.toString());
+        } catch (IOException e) {
+        }
+    }
+
+    public void testUnweightedGraphReaderWithNegativeNodes()
+    {
+        GraphReader<Integer, DefaultEdge> reader;
+        String emptyGraph = "p -3\ne 1 2\ne 2 3";
+        try {
+            reader = new GraphReader<Integer, DefaultEdge>(new StringReader(emptyGraph));
+            Graph<Integer, DefaultEdge> g = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            VertexFactory<Integer> vf = new IntVertexFactory();
+            reader.generateGraph(g, vf, null);
+            
+            Graph<Integer, DefaultEdge> g2 = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+	    g2.addVertex(0);
+	    g2.addVertex(1);
+	    g2.addVertex(2);
+	    g2.addEdge(0,1);
+     	    g2.addEdge(1,2);
+            assertEquals(g2.toString(), g.toString());
+        } catch (IOException e) {
+        }
+    }
+
+    public void testUnweightedGraphReaderWithExtraSpaces()
+    {
+        GraphReader<Integer, DefaultEdge> reader;
+        String emptyGraph = "p 3\ne 1  2 \ne  1  3";
+        try {
+            reader = new GraphReader<Integer, DefaultEdge>(new StringReader(emptyGraph));
+            Graph<Integer, DefaultEdge> g = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            VertexFactory<Integer> vf = new IntVertexFactory();
+            reader.generateGraph(g, vf, null);
+            
+            Graph<Integer, DefaultEdge> g2 = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            g2.addVertex(0);
+            g2.addVertex(1);
+            g2.addVertex(2);
+            g2.addEdge(0,1);
+            g2.addEdge(0,2);
+            assertEquals(g2.toString(), g.toString());
+        } catch (IOException e) {
+        }
+    }
+
+    public void testGraphReaderWeightedWithNegativeWeights()
+    {   
+        String graphString = "p 3\ne 1 2 .5\ne 1 3 -7\n";
+        try {
+            GraphReader<Integer, DefaultWeightedEdge> reader = new GraphReader<Integer, DefaultWeightedEdge>(new StringReader(graphString),1);
+            Graph<Integer, DefaultWeightedEdge> g = new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+            VertexFactory<Integer> vf = new IntVertexFactory();
+            reader.generateGraph(g, vf, null);
+            
+            WeightedGraph<Integer, DefaultWeightedEdge> g2 = new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+            g2.addVertex(0);
+            g2.addVertex(1);
+            g2.addVertex(2);
+            g2.setEdgeWeight(g2.addEdge(0, 1), .5);
+            g2.setEdgeWeight(g2.addEdge(0, 2), -7);
+            assertEquals(g2.toString(), g.toString());
+        } catch (IOException e) {
+        }
+    }
+
+    public void testGraphReaderWeightedWithMissingWeights()
+    {   
+        String graphString = "p 3\ne 1 2\ne 1 3 -7\n";
+        try {
+            GraphReader<Integer, DefaultWeightedEdge> reader = new GraphReader<Integer, DefaultWeightedEdge>(new StringReader(graphString),1);
+            Graph<Integer, DefaultWeightedEdge> g = new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+            VertexFactory<Integer> vf = new IntVertexFactory();
+            reader.generateGraph(g, vf, null);
+            
+            WeightedGraph<Integer, DefaultWeightedEdge> g2 = new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+            g2.addVertex(0);
+            g2.addVertex(1);
+            g2.addVertex(2);
+            g2.setEdgeWeight(g2.addEdge(0, 1), 1);
+            g2.setEdgeWeight(g2.addEdge(0, 2), -7);
+            assertEquals(g2.toString(), g.toString());
+        } catch (IOException e) {
+        }
+    }
+
 public void testGraphReaderTerminalCoverage() {
-String _unweightedG = "p 10\ne 1 2\ne 2 3\ne 3 4\ne 4 5\ne 5 6\ne 6 7\ne 7 8\ne 8 9\ne 9 10";
+    String _unweightedG = "p 10\ne 1 2\ne 2 3\ne 3 4\ne 4 5\ne 5 6\ne 6 7\ne 7 8\ne 8 9\ne 9 10";
     GraphReader<Integer, DefaultEdge> reader;
     try {
         reader =
