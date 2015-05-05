@@ -146,6 +146,7 @@ public class GraphReader<V, E>
         Map<String, V> resultMap)
     {
         final int size = readNodeCount();
+	System.out.println("Node count is = " + size);
         if (resultMap == null) {
             resultMap = new HashMap<String, V>();
         }

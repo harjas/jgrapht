@@ -79,6 +79,183 @@ public class BreadthFirstIteratorTest
 
         return i;
     }
+ 
+    public void testBreadthFirstOnEmptyGraph(){
+        DirectedGraph<String, DefaultEdge> dg =
+            new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+       AbstractGraphIterator<String, DefaultEdge> bfs = new BreadthFirstIterator<String, DefaultEdge>(dg);
+        assertFalse(bfs.hasNext());
+    }
+
+    public void testSimpleBreadthFirst(){
+        DirectedGraph<String, DefaultEdge> dg =
+            new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+
+        String a = "A";
+        String b = "B";
+        String c = "C";
+        String d = "D";
+
+        dg.addVertex(a);
+        dg.addVertex(b);
+        dg.addVertex(c);
+        dg.addVertex(d);
+
+        dg.addEdge(a,b);
+        dg.addEdge(b,c);
+        dg.addEdge(c,d);
+
+        AbstractGraphIterator<String, DefaultEdge> bfs = new BreadthFirstIterator<String, DefaultEdge>(dg);
+        String actual = "";
+        while (bfs.hasNext()) {
+            String v = bfs.next();
+            actual += v;
+        }
+
+        String expected = "ABCD";
+        assertEquals(expected, actual);
+    }
+
+    public void testOrderOfBreadthFirst(){
+        DirectedGraph<String, DefaultEdge> dg =
+            new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+
+        String a = "A";
+        String b = "B";
+        String c = "C";
+        String j = "J";
+        String x = "X";
+        String d = "D";
+        String k = "K";
+
+        dg.addVertex(a);
+        dg.addVertex(b);
+        dg.addVertex(c);
+        dg.addVertex(d);
+        dg.addVertex(j);
+        dg.addVertex(x);
+        dg.addVertex(k);
+
+        dg.addEdge(a,b);
+        dg.addEdge(b,c);
+        dg.addEdge(c,d);
+        dg.addEdge(c,j);
+        dg.addEdge(c,x);
+        dg.addEdge(c,k);
+
+        AbstractGraphIterator<String, DefaultEdge> bfs = new BreadthFirstIterator<String, DefaultEdge>(dg);
+        String actual = "";
+        while (bfs.hasNext()) {
+            String v = bfs.next();
+            actual += v;
+        }
+	// based on order of insertion of edges
+        String expected = "ABCDJXK";
+        assertEquals(expected, actual);
+    }
+
+    public void testComplexOrderOfBreadthFirst(){
+        DirectedGraph<String, DefaultEdge> dg =
+            new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+
+        String a = "A";
+        String b = "B";
+        String c = "C";
+        String j = "J";
+        String x = "X";
+        String d = "D";
+        String k = "K";
+        String e = "E";
+        String f = "F";
+        String g = "G";
+
+        dg.addVertex(a);
+        dg.addVertex(b);
+        dg.addVertex(c);
+        dg.addVertex(d);
+        dg.addVertex(j);
+        dg.addVertex(x);
+        dg.addVertex(k);
+        dg.addVertex(e);
+        dg.addVertex(f);
+        dg.addVertex(g);
+
+        dg.addEdge(a,b);
+        dg.addEdge(b,c);
+        dg.addEdge(c,d);
+        dg.addEdge(c,j);
+        dg.addEdge(c,x);
+        dg.addEdge(c,k);
+        dg.addEdge(x,f);
+        dg.addEdge(x,e);
+        dg.addEdge(x,g);
+
+        AbstractGraphIterator<String, DefaultEdge> bfs = new BreadthFirstIterator<String, DefaultEdge>(dg);
+        String actual = "";
+        while (bfs.hasNext()) {
+            String v = bfs.next();
+            actual += v;
+        }
+
+        String expected = "ABCDJXKFEG";
+        assertEquals(expected, actual);
+    }
+
+    public void testMoreComplexOrderOfBreadthFirst(){
+        DirectedGraph<String, DefaultEdge> dg =
+            new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+
+        String a = "A";
+        String b = "B";
+        String c = "C";
+        String j = "J";
+        String x = "X";
+        String d = "D";
+        String k = "K";
+        String e = "E";
+        String f = "F";
+        String g = "G";
+        String m = "M";
+        String n = "N";
+        String o = "O";
+
+        dg.addVertex(a);
+        dg.addVertex(b);
+        dg.addVertex(c);
+        dg.addVertex(d);
+        dg.addVertex(j);
+        dg.addVertex(x);
+        dg.addVertex(k);
+        dg.addVertex(e);
+        dg.addVertex(f);
+        dg.addVertex(g);
+        dg.addVertex(m);
+        dg.addVertex(n);
+        dg.addVertex(o);
+
+        dg.addEdge(a,b);
+        dg.addEdge(b,c);
+        dg.addEdge(c,d);
+        dg.addEdge(c,j);
+        dg.addEdge(c,x);
+        dg.addEdge(c,k);
+        dg.addEdge(x,f);
+        dg.addEdge(x,e);
+        dg.addEdge(x,g);
+        dg.addEdge(j,m);
+        dg.addEdge(j,n);
+        dg.addEdge(j,o);
+
+        AbstractGraphIterator<String, DefaultEdge> bfs = new BreadthFirstIterator<String, DefaultEdge>(dg);
+        String actual = "";
+        while (bfs.hasNext()) {
+            String v = bfs.next();
+            actual += v;
+        }
+
+        String expected = "ABCDJXKMNOFEG";
+        assertEquals(expected, actual);
+    }
 }
 
 // End BreadthFirstIteratorTest.java
