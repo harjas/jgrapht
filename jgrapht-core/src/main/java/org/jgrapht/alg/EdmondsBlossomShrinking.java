@@ -167,9 +167,7 @@ public class EdmondsBlossomShrinking<V, E>
                 if ((base.get(v) == base.get(to)) || (match.get(v) == to)) {
                     continue;
                 }
-                if ((to == root)
-                    || ((match.containsKey(to))
-                        && (p.containsKey(match.get(to)))))
+                if ((to == root) || ((match.containsKey(to)) && (p.containsKey(match.get(to)))))
                 {
                     V curbase = lca(graph, v, to);
                     blossom.clear();
@@ -177,8 +175,7 @@ public class EdmondsBlossomShrinking<V, E>
                     markPath(to, curbase, v);
 
                     for (V i : graph.vertexSet()) {
-                        if (base.containsKey(i)
-                            && blossom.contains(base.get(i)))
+                        if (base.containsKey(i) && blossom.contains(base.get(i)))
                         {
                             base.put(i, curbase);
                             if (!used.contains(i)) {

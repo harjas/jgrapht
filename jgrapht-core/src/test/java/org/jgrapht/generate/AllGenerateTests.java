@@ -47,7 +47,7 @@ import org.junit.runners.*;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     GraphGeneratorTest.class,
-    RandomGraphGeneratorTest.class
+    RandomGraphGeneratorTest.class,
 })
 public final class AllGenerateTests
 {

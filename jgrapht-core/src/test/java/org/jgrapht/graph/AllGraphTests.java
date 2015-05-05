@@ -59,7 +59,8 @@ import org.junit.runners.*;
     SimpleDirectedGraphTest.class,
     SimpleGraphPathTest.class,
     SubgraphTest.class,
-    SimpleIdentityDirectedGraphTest.class
+    SimpleIdentityDirectedGraphTest.class,
+    MaskSubgraphTest.class
 })
 public final class AllGraphTests
 {
