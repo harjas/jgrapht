@@ -264,7 +264,15 @@ public class GraphReaderTest
             g2.addVertex(2);
             g2.setEdgeWeight(g2.addEdge(0, 1), .5);
             g2.setEdgeWeight(g2.addEdge(0, 2), -7);
-            assertEquals(g2.toString(), g.toString());
+            
+	    DefaultWeightedEdge e1 = g.getEdge(0, 1);
+            DefaultWeightedEdge e2 = g.getEdge(0, 2);
+            DefaultWeightedEdge e3 = g2.getEdge(0, 1);
+            DefaultWeightedEdge e4 = g2.getEdge(0, 2);
+
+            assertEquals(g2.getEdgeWeight(e3), g.getEdgeWeight(e1));
+            assertEquals(g2.getEdgeWeight(e4), g.getEdgeWeight(e2));
+	    assertEquals(g2.toString(), g.toString());
         } catch (IOException e) {
         }
     }
@@ -284,6 +292,42 @@ public class GraphReaderTest
             g2.addVertex(2);
             g2.setEdgeWeight(g2.addEdge(0, 1), 1);
             g2.setEdgeWeight(g2.addEdge(0, 2), -7);
+	    
+	    DefaultWeightedEdge e1 = g.getEdge(0, 1);
+	    DefaultWeightedEdge e2 = g.getEdge(0, 2);	
+	    DefaultWeightedEdge e3 = g2.getEdge(0, 1);
+	    DefaultWeightedEdge e4 = g2.getEdge(0, 2);
+            
+	    assertEquals(g2.getEdgeWeight(e3), g.getEdgeWeight(e1));
+	    assertEquals(g2.getEdgeWeight(e4), g.getEdgeWeight(e2));
+        } catch (IOException e) {
+        }
+    }
+
+    public void testGraphReaderWeightedWithMaxValueWeights()
+    {   
+        String graphString = "p 3\ne 1 2\ne 1 3 1.79769313486232E+308\n";
+        try {
+            GraphReader<Integer, DefaultWeightedEdge> reader = new GraphReader<Integer, DefaultWeightedEdge>(new StringReader(graphString),1);
+            Graph<Integer, DefaultWeightedEdge> g = new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+            VertexFactory<Integer> vf = new IntVertexFactory();
+            reader.generateGraph(g, vf, null);
+            
+            WeightedGraph<Integer, DefaultWeightedEdge> g2 = new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+            g2.addVertex(0);
+            g2.addVertex(1);
+            g2.addVertex(2);
+            g2.setEdgeWeight(g2.addEdge(0, 1), 1);
+            g2.setEdgeWeight(g2.addEdge(0, 2), Double.POSITIVE_INFINITY);
+	    System.out.println(g.toString());
+
+            DefaultWeightedEdge e1 = g.getEdge(0, 1);
+            DefaultWeightedEdge e2 = g.getEdge(0, 2);
+            DefaultWeightedEdge e3 = g2.getEdge(0, 1);
+            DefaultWeightedEdge e4 = g2.getEdge(0, 2);
+
+            assertEquals(g2.getEdgeWeight(e3), g.getEdgeWeight(e1));
+            assertEquals(g2.getEdgeWeight(e4), g.getEdgeWeight(e2));
             assertEquals(g2.toString(), g.toString());
         } catch (IOException e) {
         }
