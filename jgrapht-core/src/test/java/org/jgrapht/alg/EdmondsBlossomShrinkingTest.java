@@ -36,10 +36,19 @@ package org.jgrapht.alg;
 
 import junit.framework.TestCase;
 import org.jgrapht.UndirectedGraph;
+import org.jgrapht.generate.*;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
 import java.util.Set;
+
+import java.util.*;
+
+import junit.framework.*;
+
+import org.jgrapht.*;
+import org.jgrapht.experimental.isomorphism.*;
+import org.jgrapht.graph.*;
 
 /**
  * .
@@ -79,7 +88,7 @@ public final class EdmondsBlossomShrinkingTest extends TestCase
         assertTrue(match.contains(e34));
     }
     
-    public void testBloom()
+    /*public void testBloom()
     {
         // create an undirected graph
         UndirectedGraph<Integer, DefaultEdge> g =
@@ -165,7 +174,7 @@ public final class EdmondsBlossomShrinkingTest extends TestCase
         Set<DefaultEdge> match = matcher.getMatching();
         assertEquals(1, match.size());
         assertTrue(match.contains(e12) || match.contains(e21));
-    }
+    }*/
 
     // Bug! null pointer exception
     /*public void testForest()
@@ -266,27 +275,23 @@ public final class EdmondsBlossomShrinkingTest extends TestCase
         g.addVertex(v7);
         g.addVertex(v8);
         g.addVertex(v9);
-        g.addVertex(v10);
-        g.addVertex(v11);
+        //g.addVertex(v10);
+        //g.addVertex(v11);
 
 
-        //DefaultEdge e119 = g.addEdge(v11, v9);
-        DefaultEdge e910 = g.addEdge(v9, v10);
-        DefaultEdge e101 = g.addEdge(v10, v1);
-
+        DefaultEdge e78 = g.addEdge(v7, v8);
+        DefaultEdge e81 = g.addEdge(v8, v1);
         DefaultEdge e12 = g.addEdge(v1, v2);
         DefaultEdge e23 = g.addEdge(v2, v3);
         DefaultEdge e24 = g.addEdge(v2, v4);
-        DefaultEdge e25 = g.addEdge(v2, v5);
-        DefaultEdge e36 = g.addEdge(v3, v6);
-        DefaultEdge e47 = g.addEdge(v4, v7);
-        DefaultEdge e58 = g.addEdge(v5, v8);
+        DefaultEdge e35 = g.addEdge(v3, v5);
+        DefaultEdge e36 = g.addEdge(v4, v6);
 
         // compute max match
         EdmondsBlossomShrinking<Integer, DefaultEdge> matcher =
             new EdmondsBlossomShrinking<Integer, DefaultEdge>(g);
         Set<DefaultEdge> match = matcher.getMatching();
-        assertEquals(5, match.size());
+        assertEquals(4, match.size());
     }
 
     // Coverage Yay!
@@ -324,5 +329,56 @@ public final class EdmondsBlossomShrinkingTest extends TestCase
             new EdmondsBlossomShrinking<Integer, DefaultEdge>(g);
         Set<DefaultEdge> match = matcher.getMatching();
         assertEquals(2, match.size());
+    }
+
+    public void testRandom()
+    {
+        // create an undirected graph
+        UndirectedGraph<Integer, DefaultEdge> g =
+            new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
+
+        Integer v1 = 1;
+        Integer v2 = 2;
+        Integer v3 = 3;
+        Integer v4 = 4;
+        Integer v5 = 5;
+        Integer v6 = 6;
+        Integer v7 = 7;
+        Integer v8 = 8;
+        Integer v9 = 9;
+        Integer v10 = 10;
+
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+        g.addVertex(v5);
+        g.addVertex(v6);
+        g.addVertex(v7);
+        g.addVertex(v8);
+        g.addVertex(v9);
+        g.addVertex(v10);
+
+        g.addEdge(v5, v10);
+        g.addEdge(v4, v6);
+        g.addEdge(v5, v2);
+        g.addEdge(v2, v9);
+        g.addEdge(v10, v6);
+        g.addEdge(v1, v5);
+        g.addEdge(v10, v4);
+        g.addEdge(v9, v7);
+        g.addEdge(v3, v10);
+        g.addEdge(v2, v7);
+        g.addEdge(v9, v10);
+        g.addEdge(v10, v8);
+        g.addEdge(v6, v2);
+        g.addEdge(v3, v4);
+
+        // compute max match
+        EdmondsBlossomShrinking<Integer, DefaultEdge> matcher =
+            new EdmondsBlossomShrinking<Integer, DefaultEdge>(g);
+        Set<DefaultEdge> match = matcher.getMatching();
+
+        assertEquals(5, match.size());
     }
 }

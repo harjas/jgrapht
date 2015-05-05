@@ -125,6 +125,8 @@ public class EdmondsBlossomShrinking<V, E>
                 V v = findPath(i);
                 while (v != null) {
                     V pv = p.get(v);
+                    if(pv == null)
+                        System.out.println("null");
                     V ppv = match.get(pv);
                     match.put(v, pv);
                     match.put(pv, v);
@@ -167,6 +169,7 @@ public class EdmondsBlossomShrinking<V, E>
                 if ((base.get(v) == base.get(to)) || (match.get(v) == to)) {
                     continue;
                 }
+
                 if ((to == root) || ((match.containsKey(to)) && (p.containsKey(match.get(to)))))
                 {
                     V curbase = lca(graph, v, to);
